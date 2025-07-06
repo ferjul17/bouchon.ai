@@ -22,9 +22,7 @@ async function main() {
     { command: 'pnpm', args: ['--filter', '@test-ai/backend', 'test:coverage'] },
   ]
 
-  const results = await Promise.all(
-    commands.map(cmd => runCommand(cmd.command, cmd.args)),
-  )
+  const results = await Promise.all(commands.map(cmd => runCommand(cmd.command, cmd.args)))
 
   const failed = results.some(exitCode => exitCode !== 0)
 

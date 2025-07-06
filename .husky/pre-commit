@@ -1,1 +1,3 @@
-pnpm test
+#!/bin/sh
+
+tsx .husky/pre-commit.ts
