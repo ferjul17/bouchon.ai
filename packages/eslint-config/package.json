@@ -1,0 +1,11 @@
+{
+  "name": "@test-ai/eslint-config",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "type": "module",
+  "dependencies": {
+    "@antfu/eslint-config": "^4.16.2",
+    "eslint": "^9.30.1"
+  }
+}

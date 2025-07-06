@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RequestBin Clone</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      line-height: 1.6;
+      color: #333;
+    }
+    h1, h2, h3, h4 {
+      color: #333;
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .btn {
+      display: inline-block;
+      background: #0070f3;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      text-decoration: none;
+      margin-top: 1rem;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .btn:hover {
+      background: #0051a8;
+    }
+    .btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    code {
+      background: #f4f4f4;
+      padding: 0.2rem 0.4rem;
+      border-radius: 3px;
+      font-family: monospace;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 1rem;
+      border-radius: 5px;
+      overflow-x: auto;
+      font-family: monospace;
+    }
+    input {
+      padding: 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      margin-right: 0.5rem;
+      font-size: 1rem;
+    }
+    .container {
+      display: flex;
+      margin-top: 2rem;
+      gap: 2rem;
+    }
+    .sidebar {
+      width: 30%;
+      padding-right: 1rem;
+    }
+    .main-content {
+      width: 70%;
+    }
+    .bin-list {
+      list-style: none;
+      padding: 0;
+    }
+    .bin-item {
+      padding: 0.8rem;
+      margin-bottom: 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      border: 1px solid #eee;
+      transition: all 0.2s ease;
+    }
+    .bin-item:hover, .bin-item.active {
+      background: #f4f4f4;
+      border-color: #ddd;
+    }
+    .bin-item-meta {
+      font-size: 0.8rem;
+      color: #666;
+      margin-top: 0.3rem;
+    }
+    .request-list {
+      list-style: none;
+      padding: 0;
+    }
+    .request-item {
+      padding: 0.8rem;
+      margin-bottom: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .request-item:hover, .request-item.active {
+      background: #f4f4f4;
+      border-color: #bbb;
+    }
+    .request-method {
+      font-weight: bold;
+      margin-right: 0.5rem;
+      padding: 0.2rem 0.4rem;
+      border-radius: 3px;
+      background: #e9ecef;
+    }
+    .request-path {
+      color: #0070f3;
+      margin-right: 0.5rem;
+    }
+    .request-time {
+      color: #666;
+      font-size: 0.8rem;
+    }
+    .request-details {
+      margin-top: 1rem;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .request-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .tab-container {
+      margin-top: 1rem;
+    }
+    .tab-buttons {
+      display: flex;
+      border-bottom: 1px solid #ddd;
+    }
+    .tab-button {
+      padding: 0.5rem 1rem;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .tab-button.active {
+      border-bottom: 2px solid #0070f3;
+      font-weight: bold;
+    }
+    .tab-button:disabled {
+      color: #ccc;
+      cursor: not-allowed;
+    }
+    .tab-content {
+      padding: 1rem 0;
+    }
+    .notification {
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 4px;
+      background: #f8f9fa;
+      border-left: 4px solid #0070f3;
+    }
+    .notification.error {
+      border-left-color: #e74c3c;
+      background: #fdf3f2;
+    }
+    .app-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    hr {
+      margin: 2rem 0;
+      border: none;
+      border-top: 1px solid #eee;
+    }
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      .sidebar, .main-content {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="/bundle.js"></script>
+</body>
+</html>

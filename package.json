@@ -1,0 +1,25 @@
+{
+  "name": "bouchon.ai",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "A RequestBin-like service for collecting and inspecting HTTP requests",
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "test": "pnpm -r test",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@test-ai/eslint-config": "workspace:*",
+    "prettier": "^3.6.2",
+    "typescript": "^5.8.3"
+  },
+  "pnpm": {
+    "workspaces": [
+      "packages/*"
+    ]
+  }
+}

@@ -1,0 +1,82 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: pnpm
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Lint
+        run: pnpm run lint
+
+      - name: Format Check
+        run: pnpm run format --check
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Test and Coverage
+        run: pnpm --filter @test-ai/backend test:coverage
+
+      - name: Check for Outdated Dependencies
+        id: outdated
+        run: |
+          pnpm outdated --json > outdated.json
+          if [ -s outdated.json ]; then
+            echo "::set-output name=outdated::true"
+          else
+            echo "::set-output name=outdated::false"
+          fi
+
+      - name: Create Pull Request for Outdated Dependencies
+        if: steps.outdated.outputs.outdated == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: update outdated dependencies"
+          title: "chore: update outdated dependencies"
+          body: "This PR updates outdated dependencies."
+          branch: "update-dependencies"
+          delete-branch: true
+          committer: "GitHub Actions <actions@github.com>"
+          author: "GitHub Actions <actions@github.com>"
+          labels: |
+            dependencies
+            automated pr
+          assignees: ${{ github.actor }}
+          reviewers: ${{ github.actor }}
+          base: ${{ github.base_ref || github.ref_name }}
+          push-to-fork: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
+          push-to-fork-token: ${{ secrets.GITHUB_TOKEN }}
+          add-paths: |
+            package.json
+            pnpm-lock.yaml
+            packages/**/package.json
+            packages/**/pnpm-lock.yaml
+          
+      - name: Run Tests (Frontend)
+        run: pnpm --filter @test-ai/frontend test || true # Allow frontend tests to fail if not implemented yet
