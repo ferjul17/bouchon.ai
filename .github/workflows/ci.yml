@@ -29,9 +29,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Install Vitest
-        run: pnpm add -D vitest
-
       - name: Lint
         run: pnpm run lint
 
