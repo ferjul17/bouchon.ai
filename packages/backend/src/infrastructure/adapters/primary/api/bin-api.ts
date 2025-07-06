@@ -18,13 +18,13 @@ export function createBinApi(binService: BinService): Hono {
   const api = app.basePath('/api')
 
   // Get all bins
-  api.get('/bins', async (c) => {
+  api.get('/bins', async c => {
     const bins = await binService.getAllBins()
     return c.json({ bins })
   })
 
   // Create a new bin
-  api.post('/bins', async (c) => {
+  api.post('/bins', async c => {
     const data = await c.req.json<{ name?: string }>().catch(() => ({}))
     // Use optional chaining to safely access name property
     const name = 'name' in data ? data.name : undefined
@@ -33,7 +33,7 @@ export function createBinApi(binService: BinService): Hono {
   })
 
   // Get a bin by ID
-  api.get('/bins/:id', async (c) => {
+  api.get('/bins/:id', async c => {
     const id = c.req.param('id')
     const bin = await binService.getBin(id)
 
@@ -45,7 +45,7 @@ export function createBinApi(binService: BinService): Hono {
   })
 
   // Delete a bin
-  api.delete('/bins/:id', async (c) => {
+  api.delete('/bins/:id', async c => {
     const id = c.req.param('id')
     const deleted = await binService.deleteBin(id)
 
@@ -57,7 +57,7 @@ export function createBinApi(binService: BinService): Hono {
   })
 
   // Capture requests to bins
-  app.all('/b/:id/*', async (c) => {
+  app.all('/b/:id/*', async c => {
     const binId = c.req.param('id')
     const bin = await binService.getBin(binId)
 
@@ -79,8 +79,7 @@ export function createBinApi(binService: BinService): Hono {
     if (c.req.method !== 'GET' && c.req.method !== 'HEAD') {
       try {
         body = await c.req.text()
-      }
-      catch (error) {
+      } catch (error) {
         console.error('Error reading request body:', error)
       }
     }

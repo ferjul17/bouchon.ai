@@ -5,10 +5,10 @@ import type { Request } from '../model/request.js'
  * Events that can be sent to clients
  */
 export type NotificationEvent
-  = | { type: 'BIN_CREATED', bin: Bin }
-    | { type: 'BIN_UPDATED', bin: Bin }
-    | { type: 'BIN_DELETED', binId: string }
-    | { type: 'REQUEST_RECEIVED', bin: Bin, request: Request }
+  = | { type: 'BIN_CREATED'; bin: Bin }
+    | { type: 'BIN_UPDATED'; bin: Bin }
+    | { type: 'BIN_DELETED'; binId: string }
+    | { type: 'REQUEST_RECEIVED'; bin: Bin; request: Request }
 
 /**
  * Port for sending real-time notifications to clients

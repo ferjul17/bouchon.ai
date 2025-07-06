@@ -56,13 +56,13 @@ jobs:
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "chore: update outdated dependencies"
-          title: "chore: update outdated dependencies"
-          body: "This PR updates outdated dependencies."
-          branch: "update-dependencies"
+          commit-message: 'chore: update outdated dependencies'
+          title: 'chore: update outdated dependencies'
+          body: 'This PR updates outdated dependencies.'
+          branch: 'update-dependencies'
           delete-branch: true
-          committer: "GitHub Actions <actions@github.com>"
-          author: "GitHub Actions <actions@github.com>"
+          committer: 'GitHub Actions <actions@github.com>'
+          author: 'GitHub Actions <actions@github.com>'
           labels: |
             dependencies
             automated pr
@@ -76,6 +76,6 @@ jobs:
             pnpm-lock.yaml
             packages/**/package.json
             packages/**/pnpm-lock.yaml
-          
+
       - name: Run Tests (Frontend)
         run: pnpm --filter @test-ai/frontend test || true # Allow frontend tests to fail if not implemented yet

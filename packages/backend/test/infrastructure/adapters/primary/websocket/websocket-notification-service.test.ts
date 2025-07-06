@@ -78,7 +78,7 @@ describe('webSocketNotificationService', () => {
 
     it('should send client ID on connection', () => {
       expect(mockSocket.send).toHaveBeenCalledWith(
-        JSON.stringify({ type: 'CONNECTED', clientId: 'test-client-id' }),
+        JSON.stringify({ type: 'CONNECTED', clientId: 'test-client-id' })
       )
     })
 

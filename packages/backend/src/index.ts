@@ -37,7 +37,7 @@ app.use('/bundle.js', serveStatic({ path: path.join(__dirname, '../../dist/publi
 app.get('/', serveStatic({ path: path.join(__dirname, '../../dist/public/index.html') }))
 
 // Keep the old HTML page for reference (commented out)
-app.get('/old', (c) => {
+app.get('/old', c => {
   return c.html(`
     <!DOCTYPE html>
     <html lang="en">
@@ -479,11 +479,10 @@ const server = serve({
 // Handle WebSocket upgrade
 server.addListener('upgrade', (request: any, socket: any, head: any) => {
   if (request.url === '/ws') {
-    wss.handleUpgrade(request, socket, head, (ws) => {
+    wss.handleUpgrade(request, socket, head, ws => {
       wss.emit('connection', ws, request)
     })
-  }
-  else {
+  } else {
     socket.destroy()
   }
 })

@@ -9,15 +9,14 @@ interface BinCreatorProps {
 const BinCreator: React.FC<BinCreatorProps> = ({ createBin, onBinCreated }) => {
   const [binName, setBinName] = useState('')
   const [isCreating, setIsCreating] = useState(false)
-  const [notification, setNotification] = useState<{ message: string, isError: boolean } | null>(
-    null,
+  const [notification, setNotification] = useState<{ message: string; isError: boolean } | null>(
+    null
   )
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (isCreating)
-      return
+    if (isCreating) return
 
     setIsCreating(true)
     setNotification({ message: 'Creating bin...', isError: false })
@@ -27,14 +26,12 @@ const BinCreator: React.FC<BinCreatorProps> = ({ createBin, onBinCreated }) => {
       setNotification({ message: 'Bin created successfully!', isError: false })
       setBinName('')
       onBinCreated(bin)
-    }
-    catch (error) {
+    } catch (error) {
       setNotification({
         message: error instanceof Error ? error.message : 'Failed to create bin',
         isError: true,
       })
-    }
-    finally {
+    } finally {
       setIsCreating(false)
     }
   }

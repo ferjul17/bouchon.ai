@@ -143,7 +143,7 @@ describe('binService', () => {
       }
 
       // Mock the updateBin to return a bin with the request added
-      vi.mocked(binRepository.updateBin).mockImplementation(async (updatedBin) => {
+      vi.mocked(binRepository.updateBin).mockImplementation(async updatedBin => {
         return updatedBin
       })
 

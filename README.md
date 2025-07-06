@@ -89,7 +89,7 @@ Connect to the WebSocket endpoint to receive real-time updates:
 const ws = new WebSocket('ws://localhost:3000/ws')
 
 // Listen for messages
-ws.onmessage = (event) => {
+ws.onmessage = event => {
   const data = JSON.parse(event.data)
   console.log('Received:', data)
 }

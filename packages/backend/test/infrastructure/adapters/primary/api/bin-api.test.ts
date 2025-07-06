@@ -199,7 +199,7 @@ describe('bin API', () => {
           body: expect.any(String),
           ip: '127.0.0.1',
           contentType: 'application/json',
-        }),
+        })
       )
     })
 
@@ -236,7 +236,7 @@ describe('bin API', () => {
           path: expect.stringContaining('/test'),
           query: expect.objectContaining({ q: 'test' }),
           body: null,
-        }),
+        })
       )
     })
   })

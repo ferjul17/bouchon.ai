@@ -10,7 +10,7 @@ import { createRequest } from '../../domain/model/request.js'
 export class BinService {
   constructor(
     private readonly binRepository: BinRepository,
-    private readonly notificationService: NotificationService,
+    private readonly notificationService: NotificationService
   ) {}
 
   /**
@@ -52,11 +52,10 @@ export class BinService {
    */
   async addRequest(
     binId: string,
-    requestData: Omit<Request, 'id' | 'timestamp'>,
-  ): Promise<{ bin: Bin, request: Request } | null> {
+    requestData: Omit<Request, 'id' | 'timestamp'>
+  ): Promise<{ bin: Bin; request: Request } | null> {
     const bin = await this.binRepository.getBin(binId)
-    if (!bin)
-      return null
+    if (!bin) return null
 
     const request = createRequest(requestData)
     const updatedBin = addRequestToBin(bin, request)

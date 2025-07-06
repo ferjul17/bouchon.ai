@@ -41,12 +41,10 @@ export class WebSocketNotificationService implements NotificationService {
 
           if (data.type === 'SUBSCRIBE' && data.binId) {
             this.subscribeToBin(data.binId, clientId).catch(console.error)
-          }
-          else if (data.type === 'UNSUBSCRIBE' && data.binId) {
+          } else if (data.type === 'UNSUBSCRIBE' && data.binId) {
             this.unsubscribeFromBin(data.binId, clientId).catch(console.error)
           }
-        }
-        catch (error) {
+        } catch (error) {
           console.error('Error processing WebSocket message:', error)
         }
       })
@@ -85,8 +83,7 @@ export class WebSocketNotificationService implements NotificationService {
       if (client && client.socket.readyState === WebSocket.OPEN) {
         client.socket.send(message)
       }
-    }
-    else if (event.type === 'REQUEST_RECEIVED' || event.type === 'BIN_UPDATED') {
+    } else if (event.type === 'REQUEST_RECEIVED' || event.type === 'BIN_UPDATED') {
       // Notify subscribers of the bin
       if (event.bin) {
         const binId = event.bin.id
@@ -99,8 +96,7 @@ export class WebSocketNotificationService implements NotificationService {
           }
         }
       }
-    }
-    else {
+    } else {
       // Broadcast to all clients
       for (const client of this.clients.values()) {
         if (client.socket.readyState === WebSocket.OPEN) {

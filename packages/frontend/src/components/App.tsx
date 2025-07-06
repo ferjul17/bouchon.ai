@@ -27,7 +27,7 @@ const App: React.FC = () => {
         ws.send(JSON.stringify({ type: 'SUBSCRIBE', binId: bin.id }))
       }
     },
-    [ws],
+    [ws]
   )
 
   // Handle request received event
@@ -41,7 +41,7 @@ const App: React.FC = () => {
         setCurrentBin(bin)
       }
     },
-    [currentBin],
+    [currentBin]
   )
 
   // Handle bin created event
@@ -59,7 +59,7 @@ const App: React.FC = () => {
         viewBin(bin)
       }
     },
-    [bins, currentBin, viewBin],
+    [bins, currentBin, viewBin]
   )
 
   // Load all bins
@@ -76,8 +76,7 @@ const App: React.FC = () => {
       if (data.bins.length > 0) {
         setView('list')
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Error loading bins:', error)
     }
   }
@@ -99,8 +98,7 @@ const App: React.FC = () => {
 
       const data = await response.json()
       return data.bin
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Error creating bin:', error)
       throw error
     }
@@ -115,18 +113,16 @@ const App: React.FC = () => {
       setWs(socket)
     }
 
-    socket.onmessage = (event) => {
+    socket.onmessage = event => {
       const data = JSON.parse(event.data)
       console.log('WebSocket message received:', data)
 
       if (data.type === 'CONNECTED') {
         // setClientId(data.clientId);
         loadBins()
-      }
-      else if (data.type === 'BIN_CREATED') {
+      } else if (data.type === 'BIN_CREATED') {
         handleBinCreated(data.bin)
-      }
-      else if (data.type === 'REQUEST_RECEIVED') {
+      } else if (data.type === 'REQUEST_RECEIVED') {
         handleRequestReceived(data.bin, data.request)
       }
     }
@@ -141,7 +137,7 @@ const App: React.FC = () => {
       return () => clearTimeout(reconnectTimeout)
     }
 
-    socket.onerror = (error) => {
+    socket.onerror = error => {
       console.error('WebSocket error:', error)
     }
 
@@ -196,9 +192,7 @@ const App: React.FC = () => {
       <h3>Send requests to a bin</h3>
       <p>
         Any HTTP request sent to
-        <code>/b/:id/*</code>
-        {' '}
-        will be captured.
+        <code>/b/:id/*</code> will be captured.
       </p>
       <pre>POST /b/:id/anything</pre>
 
@@ -209,9 +203,7 @@ const App: React.FC = () => {
       <p>Subscribe to a bin:</p>
       <pre>
         ws.send(JSON.stringify
-        {'{{'}
-        {' '}
-        type: 'SUBSCRIBE', binId: 'your-bin-id'
+        {'{{'} type: 'SUBSCRIBE', binId: 'your-bin-id'
         {'}}'}
         );
       </pre>
