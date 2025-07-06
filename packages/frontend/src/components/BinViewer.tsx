@@ -71,7 +71,9 @@ const BinViewer: React.FC<BinViewerProps> = ({ bin, onBack }) => {
                       <div>
                         <span className="request-method">{request.method}</span>
                         <span className="request-path">{request.path}</span>
-                        <span className="request-time">{new Date(request.timestamp).toLocaleString()}</span>
+                        <span className="request-time">
+                          {new Date(request.timestamp).toLocaleString()}
+                        </span>
                       </div>
                     </li>
                   ))}

@@ -17,43 +17,50 @@ const App: React.FC = () => {
   }
 
   // View a specific bin
-  const viewBin = React.useCallback((bin: Bin) => {
-    setCurrentBin(bin)
-    setView('bin')
+  const viewBin = React.useCallback(
+    (bin: Bin) => {
+      setCurrentBin(bin)
+      setView('bin')
 
-    // Subscribe to bin updates
-    if (ws && ws.readyState === WebSocket.OPEN) {
-      ws.send(JSON.stringify({ type: 'SUBSCRIBE', binId: bin.id }))
-    }
-  }, [ws])
+      // Subscribe to bin updates
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({ type: 'SUBSCRIBE', binId: bin.id }))
+      }
+    },
+    [ws],
+  )
 
   // Handle request received event
-  const handleRequestReceived = React.useCallback((bin: Bin, _request: Request) => {
-    // Update the bin in our list
-    setBins(prevBins =>
-      prevBins.map(b => (b.id === bin.id ? bin : b)),
-    )
+  const handleRequestReceived = React.useCallback(
+    (bin: Bin, _request: Request) => {
+      // Update the bin in our list
+      setBins(prevBins => prevBins.map(b => (b.id === bin.id ? bin : b)))
 
-    // If this is the current bin, update it
-    if (currentBin && bin.id === currentBin.id) {
-      setCurrentBin(bin)
-    }
-  }, [currentBin])
+      // If this is the current bin, update it
+      if (currentBin && bin.id === currentBin.id) {
+        setCurrentBin(bin)
+      }
+    },
+    [currentBin],
+  )
 
   // Handle bin created event
-  const handleBinCreated = React.useCallback((bin: Bin) => {
-    setBins(prevBins => [...prevBins, bin])
+  const handleBinCreated = React.useCallback(
+    (bin: Bin) => {
+      setBins(prevBins => [...prevBins, bin])
 
-    // If this is the first bin, show the bins list
-    if (bins.length === 0) {
-      setView('list')
-    }
+      // If this is the first bin, show the bins list
+      if (bins.length === 0) {
+        setView('list')
+      }
 
-    // If this is the bin we just created, view it
-    if (currentBin && bin.id === currentBin.id) {
-      viewBin(bin)
-    }
-  }, [bins, currentBin, viewBin])
+      // If this is the bin we just created, view it
+      if (currentBin && bin.id === currentBin.id) {
+        viewBin(bin)
+      }
+    },
+    [bins, currentBin, viewBin],
+  )
 
   // Load all bins
   const loadBins = async () => {
@@ -164,9 +171,7 @@ const App: React.FC = () => {
         </div>
       )}
 
-      {view === 'bin' && currentBin && (
-        <BinViewer bin={currentBin} onBack={goBack} />
-      )}
+      {view === 'bin' && currentBin && <BinViewer bin={currentBin} onBack={goBack} />}
 
       <hr />
 

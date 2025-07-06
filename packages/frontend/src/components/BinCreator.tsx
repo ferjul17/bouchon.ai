@@ -9,7 +9,9 @@ interface BinCreatorProps {
 const BinCreator: React.FC<BinCreatorProps> = ({ createBin, onBinCreated }) => {
   const [binName, setBinName] = useState('')
   const [isCreating, setIsCreating] = useState(false)
-  const [notification, setNotification] = useState<{ message: string, isError: boolean } | null>(null)
+  const [notification, setNotification] = useState<{ message: string, isError: boolean } | null>(
+    null,
+  )
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -49,11 +51,7 @@ const BinCreator: React.FC<BinCreatorProps> = ({ createBin, onBinCreated }) => {
           onChange={e => setBinName(e.target.value)}
           disabled={isCreating}
         />
-        <button
-          type="submit"
-          className="btn"
-          disabled={isCreating}
-        >
+        <button type="submit" className="btn" disabled={isCreating}>
           {isCreating ? 'Creating...' : 'Create Bin'}
         </button>
       </form>

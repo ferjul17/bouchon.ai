@@ -17,11 +17,7 @@ const BinList: React.FC<BinListProps> = ({ bins, onBinSelected }) => {
         : (
             <ul className="bin-list">
               {bins.map(bin => (
-                <li
-                  key={bin.id}
-                  className="bin-item"
-                  onClick={() => onBinSelected(bin)}
-                >
+                <li key={bin.id} className="bin-item" onClick={() => onBinSelected(bin)}>
                   {bin.name || bin.id}
                   <div className="bin-item-meta">
                     {bin.requests.length}
