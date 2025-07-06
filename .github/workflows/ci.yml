@@ -40,8 +40,6 @@ jobs:
 
       - name: Test and Coverage
         run: pnpm --filter @test-ai/backend test:coverage
-        env:
-          PATH: ${{ github.workspace }}/node_modules/.bin:${{ env.PATH }}
 
       - name: Check for Outdated Dependencies
         id: outdated
