@@ -1,5 +1,7 @@
-#!/usr/bin/env sh
+#!/bin/bash
 . "$(dirname -- "$0")/_/husky.sh"
+
+export PATH="$PATH:$(pnpm bin)"
 
 # Function to run a command and capture its exit status
 run_command() {
