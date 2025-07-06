@@ -26,5 +26,6 @@ build/
 coverage/
 
 # Misc
+.idea/
 *.tgz
 .pnpm-store/
