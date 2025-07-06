@@ -12,5 +12,6 @@ export default antfu({
     'style/member-delimiter-style': 'off',
     'antfu/if-newline': 'off',
     'style/multiline-ternary': 'off',
+    'style/operator-linebreak': 'off',
   },
 })
