@@ -1,0 +1,40 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Function to run a command and capture its exit status
+run_command() {
+  echo "Running: $1"
+  eval "$1" &
+  PID=$!
+  PIDS="$PIDS $PID"
+  COMMANDS["$PID"]="$1"
+}
+
+# Initialize PIDS and COMMANDS array
+PIDS=""
+declare -A COMMANDS
+
+# Run commands in parallel
+run_command "pnpm run lint"
+run_command "pnpm run format --check"
+run_command "pnpm run build"
+run_command "pnpm --filter @test-ai/backend test:coverage"
+
+# Wait for all background processes to finish
+FAIL=0
+for PID in $PIDS; do
+  wait $PID
+  EXIT_CODE=$?
+  if [ $EXIT_CODE -ne 0 ]; then
+    echo "Error: Command '${COMMANDS[$PID]}' failed with exit code $EXIT_CODE"
+    FAIL=1
+  fi
+done
+
+if [ $FAIL -ne 0 ]; then
+  echo "Pre-push hook failed. Aborting push."
+  exit 1
+else
+  echo "Pre-push hook passed. Proceeding with push."
+  exit 0
+fi
