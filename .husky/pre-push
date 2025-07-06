@@ -1,37 +1,41 @@
 #!/bin/bash
-. "$(dirname -- "$0")/_/husky.sh"
-
-export PATH="$PATH:$(pnpm bin)"
-
-# Function to run a command and capture its exit status
-run_command() {
-  echo "Running: $1"
-  eval "$1" &
-  PID=$!
-  PIDS="$PIDS $PID"
-  COMMANDS["$PID"]="$1"
-}
-
-# Initialize PIDS and COMMANDS array
-PIDS=""
-declare -A COMMANDS
 
 # Run commands in parallel
-run_command "pnpm run lint"
-run_command "pnpm run format --check"
-run_command "pnpm run build"
-run_command "pnpm --filter @test-ai/backend test:coverage"
+pnpm run lint &
+PID_LINT=$!
+pnpm run format --check &
+PID_FORMAT=$!
+pnpm run build &
+PID_BUILD=$!
+pnpm --filter @test-ai/backend test:coverage &
+PID_TEST=$!
 
 # Wait for all background processes to finish
 FAIL=0
-for PID in $PIDS; do
-  wait $PID
-  EXIT_CODE=$?
-  if [ $EXIT_CODE -ne 0 ]; then
-    echo "Error: Command '${COMMANDS[$PID]}' failed with exit code $EXIT_CODE"
-    FAIL=1
-  fi
-done
+
+wait $PID_LINT
+if [ $? -ne 0 ]; then
+  echo "Error: pnpm run lint failed."
+  FAIL=1
+fi
+
+wait $PID_FORMAT
+if [ $? -ne 0 ]; then
+  echo "Error: pnpm run format --check failed."
+  FAIL=1
+fi
+
+wait $PID_BUILD
+if [ $? -ne 0 ]; then
+  echo "Error: pnpm run build failed."
+  FAIL=1
+fi
+
+wait $PID_TEST
+if [ $? -ne 0 ]; then
+  echo "Error: pnpm --filter @test-ai/backend test:coverage failed."
+  FAIL=1
+fi
 
 if [ $FAIL -ne 0 ]; then
   echo "Pre-push hook failed. Aborting push."
