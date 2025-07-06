@@ -69,8 +69,7 @@ jobs:
           assignees: ${{ github.actor }}
           reviewers: ${{ github.actor }}
           base: ${{ github.base_ref || github.ref_name }}
-          push-to-fork: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
-          push-to-fork-token: ${{ secrets.GITHUB_TOKEN }}
+          
           add-paths: |
             package.json
             pnpm-lock.yaml
