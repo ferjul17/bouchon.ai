@@ -46,9 +46,9 @@ jobs:
         run: |
           pnpm outdated --json > outdated.json
           if [ -s outdated.json ]; then
-            echo "::set-output name=outdated::true"
+            echo "outdated=true" >> "$GITHUB_OUTPUT"
           else
-            echo "::set-output name=outdated::false"
+            echo "outdated=false" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Create Pull Request for Outdated Dependencies
@@ -69,7 +69,7 @@ jobs:
           assignees: ${{ github.actor }}
           reviewers: ${{ github.actor }}
           base: ${{ github.base_ref || github.ref_name }}
-          
+
           add-paths: |
             package.json
             pnpm-lock.yaml
