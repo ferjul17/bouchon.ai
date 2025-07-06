@@ -15,8 +15,10 @@
   },
   "devDependencies": {
     "@test-ai/eslint-config": "workspace:*",
+    "execa": "^9.6.0",
     "husky": "^9.1.7",
     "prettier": "^3.6.2",
+    "tsx": "^4.20.3",
     "typescript": "^5.8.3"
   },
   "pnpm": {
